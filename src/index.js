@@ -826,11 +826,11 @@ class ServerlessAppsyncPlugin {
     return flattenedFunctionConfigurationResources.reduce((acc, tpl) => {
       const reqTemplPath = path.join(
         functionConfigLocation,
-        tpl.request || `${tpl.name}.request.vtl`,
+        tpl.request || config.defaultMappingTemplates.request || `${tpl.type}.${tpl.field}.request.vtl`,
       );
       const respTemplPath = path.join(
         functionConfigLocation,
-        tpl.response || `${tpl.name}.response.vtl`,
+        tpl.response || config.defaultMappingTemplates.response || `${tpl.type}.${tpl.field}.response.vtl`,
       );
       const requestTemplate = fs.readFileSync(reqTemplPath, 'utf8');
       const responseTemplate = fs.readFileSync(respTemplPath, 'utf8');
@@ -873,8 +873,14 @@ class ServerlessAppsyncPlugin {
     const flattenedMappingTemplates = config.mappingTemplates
       .reduce((accumulator, currentValue) => accumulator.concat(currentValue), []);
     return flattenedMappingTemplates.reduce((acc, tpl) => {
-      const reqTemplPath = path.join(config.mappingTemplatesLocation, tpl.request || `${tpl.type}.${tpl.field}.request.vtl`);
-      const respTemplPath = path.join(config.mappingTemplatesLocation, tpl.response || `${tpl.type}.${tpl.field}.response.vtl`);
+      const reqTemplPath = path.join(
+        config.mappingTemplatesLocation, 
+        tpl.request || config.defaultMappingTemplates.request || `${tpl.type}.${tpl.field}.request.vtl`
+      );
+      const respTemplPath = path.join(
+        config.mappingTemplatesLocation, 
+        tpl.response || config.defaultMappingTemplates.response || `${tpl.type}.${tpl.field}.response.vtl`
+      );
       const requestTemplate = fs.readFileSync(reqTemplPath, 'utf8');
       const responseTemplate = fs.readFileSync(respTemplPath, 'utf8');
 

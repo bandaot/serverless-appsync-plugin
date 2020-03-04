@@ -40,6 +40,7 @@ const getConfig = (config, provider, servicePath) => {
     || mappingTemplatesLocation;
   const functionConfigurations = config.functionConfigurations || [];
   const mappingTemplates = config.mappingTemplates || [];
+  const defaultMappingTemplates = config.defaultMappingTemplates || {};
 
   const readSchemaFile =
       schemaRelPath => fs.readFileSync(path.join(servicePath, schemaRelPath), { encoding: 'utf8' });
@@ -80,6 +81,7 @@ const getConfig = (config, provider, servicePath) => {
     dataSources,
     mappingTemplatesLocation,
     mappingTemplates,
+    defaultMappingTemplates,
     functionConfigurationsLocation,
     functionConfigurations,
     logConfig: config.logConfig,
